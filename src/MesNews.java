@@ -69,6 +69,7 @@ public class MesNews{
     private static void creer(){
         bdNews = new BaseDeNews();
         bdNews.initialise();
+        System.out.println("Base initialise");
     }
 
     private static void ouvrir(){
@@ -108,10 +109,13 @@ public class MesNews{
 
     private static void afficher(){
         //for(News n : bdNews.getMaBase()) n.afficher();
-
-        Iterator<News> itr = bdNews.getMaBase().iterator();
-        while (itr.hasNext()) {
-            itr.next().afficher();
+        if( bdNews.getMaBase().isEmpty() ) {
+            System.out.println("Aucune news enregistree");
+        }else{
+            Iterator<News> itr = bdNews.getMaBase().iterator();
+            while (itr.hasNext()) {
+                itr.next().afficher();
+            }
         }
     }
 

@@ -35,7 +35,7 @@ public class News implements Comparable<News> {
                 "Titre : " + this.titre + "\n" +
                 "Date : " + this.date.toString() + "\n" +
                 "Auteur : " + this.auteur + "\n" +
-                "URL : " + this.source + "\n\n");
+                "URL : " + this.source + "\n");
     }
 
     /*public void saisir() throws MalformedURLException {
