@@ -60,8 +60,7 @@ public class MesNews{
                     System.exit(0);
                 default:
                     ;
-                    System.out.print("Erreur de saisie, veuillez reessayer" + "\nVotre choix :");
-                    choix = sc.nextInt();
+                    System.out.print("Erreur de saisie, veuillez reessayer");
             }
         }while(choix != 8);
     }
@@ -81,42 +80,51 @@ public class MesNews{
     }
 
     private static void inserer() throws MalformedURLException {
-        LocalDate date = LocalDate.now();
-        sc = new Scanner(System.in);
+        if(bdNews != null) {
 
-        System.out.print("Veuillez saisir les informations suivantes : \n\nTitre : ");
-        String titre = sc.nextLine();
+            LocalDate date = LocalDate.now();
+            sc = new Scanner(System.in);
 
-        System.out.print("Auteur : ");
-        String auteur = sc.nextLine();
+            System.out.print("Veuillez saisir les informations suivantes : \n\nTitre : ");
+            String titre = sc.nextLine();
 
-        System.out.print("URL : ");
-        URL source = new URL(sc.nextLine());
+            System.out.print("Auteur : ");
+            String auteur = sc.nextLine();
 
-        News n = new News(titre,date,auteur,source);
+            System.out.print("URL : ");
+            URL source = new URL(sc.nextLine());
 
-        bdNews.ajouterNews(n);
+            News n = new News(titre,date,auteur,source);
+
+            bdNews.ajouterNews(n);
+        }else System.out.print("Attention aucune base initialisee\n");
     }
 
     private static void supprimer(){
-        afficher();
-        sc = new Scanner(System.in);
-        System.out.print("Quelle news voulez-vous supprimer ? ");
-        int id = sc.nextInt();
-        bdNews.supprimerNews(id);
-        System.out.println("News supprimee\n");
+        if(bdNews != null) {
+            if (!bdNews.getMaBase().isEmpty()) {
+                afficher();
+                sc = new Scanner(System.in);
+                System.out.print("Quelle news voulez-vous supprimer ? ");
+                int id = sc.nextInt();
+                bdNews.supprimerNews(id);
+                System.out.println("News supprimee\n");
+            } else System.out.println("Aucune news enregistree");
+        }else System.out.print("Attention aucune base initialisee\n");
     }
 
     private static void afficher(){
-        //for(News n : bdNews.getMaBase()) n.afficher();
-        if( bdNews.getMaBase().isEmpty() ) {
-            System.out.println("Aucune news enregistree");
-        }else{
-            Iterator<News> itr = bdNews.getMaBase().iterator();
-            while (itr.hasNext()) {
-                itr.next().afficher();
+        //for(News n : bdNews.getMaBase()) n.afficher();1
+
+        if(bdNews != null) {
+            if (bdNews.getMaBase().isEmpty()) System.out.println("Aucune news enregistree");
+            else {
+                Iterator<News> itr = bdNews.getMaBase().iterator();
+                while (itr.hasNext()) {
+                    itr.next().afficher();
+                }
             }
-        }
+        }else System.out.print("Attention aucune base initialisee\n");
     }
 
     private static void rechercher() {
